@@ -7,8 +7,7 @@ app.use(express.json())
 app.use(cors())
 
 app.get('/', (req: Request, res: Response) => {
-  const a = 10
-  res.send('Helllo World' + a)
+  res.send('Bike Rental Reservation System Backend Is Ruuning')
 })
 
 export default app
