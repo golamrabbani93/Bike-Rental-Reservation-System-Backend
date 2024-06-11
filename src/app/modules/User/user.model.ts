@@ -1,9 +1,9 @@
 import bcrypt from 'bcrypt'
-import { TUser } from './user.interface'
+import { TUser, UserModel } from './user.interface'
 import { Schema, model } from 'mongoose'
 import config from '../../config'
 
-const UserSchema = new Schema<TUser>(
+const UserSchema = new Schema<TUser, UserModel>(
   {
     name: {
       type: String,
@@ -39,19 +39,6 @@ const UserSchema = new Schema<TUser>(
   },
   {
     timestamps: true,
-    // *Remove Password after Saving User Data
-    toJSON: {
-      transform: function (doc, ret) {
-        delete ret.password
-        return ret
-      },
-    },
-    toObject: {
-      transform: function (doc, ret) {
-        delete ret.password
-        return ret
-      },
-    },
   },
 )
 
@@ -67,6 +54,16 @@ UserSchema.pre('save', async function (next) {
 
   next()
 })
+UserSchema.statics.isUserExistsByEmail = async function (email: string) {
+  return await User.findOne({ email }).select('+password')
+}
+
+UserSchema.statics.isPasswordMatched = async function (
+  plainTextPassword,
+  hashedPassword,
+) {
+  return await bcrypt.compare(plainTextPassword, hashedPassword)
+}
 
 // * Create User Model
-export const User = model<TUser>('User', UserSchema)
+export const User = model<TUser, UserModel>('User', UserSchema)
