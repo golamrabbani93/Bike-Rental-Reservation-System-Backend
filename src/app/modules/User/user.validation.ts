@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { Role } from './user.constant'
 
-export const productValidationSchema = z.object({
+export const RegisterValidatioonSchema = z.object({
   body: z.object({
     name: z
       .string({
@@ -35,3 +35,7 @@ export const productValidationSchema = z.object({
     }),
   }),
 })
+
+export const userValidation = {
+  RegisterValidatioonSchema,
+}

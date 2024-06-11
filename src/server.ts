@@ -15,7 +15,7 @@ async function main() {
     //! MongoDB connection URI
     //! Connect to MongoDB using Mongoose
     const options = {
-      dbName: 'Bike Rental Reservation System Backend',
+      dbName: 'Bike_Rental_Reservation_System_Backend',
     }
     await mongoose.connect(uri as string, options)
     console.log('Connected to MongoDB')
