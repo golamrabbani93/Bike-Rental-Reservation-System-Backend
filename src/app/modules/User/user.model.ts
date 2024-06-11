@@ -21,6 +21,7 @@ const UserSchema = new Schema<TUser>(
       type: String,
       required: [true, 'Password is required'],
       minlength: [4, 'Password Must be 4 Charecter or more'],
+      select: 0,
     },
     phone: {
       type: String,
@@ -38,9 +39,23 @@ const UserSchema = new Schema<TUser>(
   },
   {
     timestamps: true,
+    // *Remove Password after Saving User Data
+    toJSON: {
+      transform: function (doc, ret) {
+        delete ret.password
+        return ret
+      },
+    },
+    toObject: {
+      transform: function (doc, ret) {
+        delete ret.password
+        return ret
+      },
+    },
   },
 )
 
+// * password hash with bcrypt
 UserSchema.pre('save', async function (next) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const user = this
