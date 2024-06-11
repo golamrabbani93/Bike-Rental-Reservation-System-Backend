@@ -3,7 +3,6 @@ import AppError from '../../errors/AppError'
 import { TUser } from '../User/user.interface'
 import { User } from '../User/user.model'
 import { TLoginUser } from './auth.interface'
-import bcrypt from 'bcrypt'
 // *Register User Info In to Database
 const registerUserIntoDB = async (payload: TUser) => {
   const result = await User.create(payload)
