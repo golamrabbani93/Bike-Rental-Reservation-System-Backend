@@ -15,5 +15,10 @@ router.post(
   validateRequest(createBikeRentalValidationSchema),
   rentalController.createBikeRental,
 )
+router.put(
+  '/:id/return',
+  auth(USER_ROLE.admin),
+  rentalController.returnBikeRental,
+)
 
 export const rentalRoutes = router

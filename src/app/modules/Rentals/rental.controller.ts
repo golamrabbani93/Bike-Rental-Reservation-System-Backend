@@ -21,6 +21,19 @@ const createBikeRental = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+// *Return bike
+const returnBikeRental = catchAsync(async (req: Request, res: Response) => {
+  const bikeId = req.params.id
+  const result = await rentalServices.returnBikeRentalFormDB(bikeId)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Bike returned successfully',
+    data: result,
+  })
+})
 export const rentalController = {
   createBikeRental,
+  returnBikeRental,
 }
