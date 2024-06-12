@@ -16,6 +16,10 @@ const BikeSchema = new Schema<TBike>({
     type: Number,
     required: [true, 'Price Per Hour is required'],
   },
+  isAvailable: {
+    type: Boolean,
+    default: true,
+  },
   cc: {
     type: Number,
     required: [true, 'Bike CC is required'],
