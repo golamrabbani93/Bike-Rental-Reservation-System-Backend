@@ -19,8 +19,11 @@ const updateSingleUserIntoDB = async (
 ) => {
   const result = await User.findOneAndUpdate(
     { email: userData?.userEmail },
-    payload,
-
+    {
+      name: payload?.name,
+      phone: payload?.phone,
+      address: payload?.address,
+    },
     {
       new: true,
     },
