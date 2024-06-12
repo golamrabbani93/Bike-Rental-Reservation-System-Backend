@@ -28,4 +28,8 @@ router.put(
   bikeController.updateBikeData,
 )
 
+// ! Delete bike Route
+
+router.delete('/:id', auth(USER_ROLE.admin), bikeController.deleteBikeData)
+
 export const bikeRoutes = router

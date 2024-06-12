@@ -48,8 +48,29 @@ const updateBikeData = catchAsync(async (req: Request, res: Response) => {
     data: result,
   })
 })
+
+// *UpdDeleteate bike data
+const deleteBikeData = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params
+  const result = await bikeServices.deleteBikeDataFromDB(id)
+  if (!result) {
+    sendResponse(res, {
+      statusCode: httpStatus.NOT_FOUND,
+      success: false,
+      message: 'No Data Found',
+      data: [],
+    })
+  }
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Bike deleted successfully',
+    data: result,
+  })
+})
 export const bikeController = {
   createBikeData,
   getAllBikeData,
   updateBikeData,
+  deleteBikeData,
 }
