@@ -5,6 +5,7 @@ import { USER_ROLE } from './user.constant'
 export type TRole = 'admin' | 'user'
 
 export interface TUser {
+  _id?: string
   name: string
   email: string
   password: string
