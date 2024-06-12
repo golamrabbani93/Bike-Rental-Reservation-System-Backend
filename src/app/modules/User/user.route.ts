@@ -1,9 +1,10 @@
 import express from 'express'
+import { userControllers } from './user.controller'
 
 const router = express.Router()
 
-// *Post User Route \
+//* Get A single user Route
 
-router.post('')
+router.get('/me', userControllers.getSingleUser)
 
 export const userRoute = router
