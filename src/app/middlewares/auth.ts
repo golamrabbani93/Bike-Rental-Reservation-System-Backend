@@ -33,12 +33,13 @@ const auth = (...requiredRoles: TUserRole[]) => {
 
     // !Check User Role
     if (requiredRoles && !requiredRoles.includes(role)) {
-      sendResponse(res, {
+      return sendResponse(res, {
         success: false,
         statusCode: 401,
         message: 'You have no access to this route',
       })
     }
+
     req.user = decoded as JwtPayload
     next()
   })
