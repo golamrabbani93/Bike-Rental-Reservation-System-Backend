@@ -15,10 +15,18 @@ router.post(
   validateRequest(createBikeRentalValidationSchema),
   rentalController.createBikeRental,
 )
+// !Bike Return Route
 router.put(
   '/:id/return',
   auth(USER_ROLE.admin),
   rentalController.returnBikeRental,
+)
+
+// ! Get My rental route
+router.get(
+  '/',
+  auth(USER_ROLE.user, USER_ROLE.admin),
+  rentalController.getMyRental,
 )
 
 export const rentalRoutes = router

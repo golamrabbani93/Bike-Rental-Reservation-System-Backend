@@ -105,7 +105,15 @@ const returnBikeRentalFormDB = async (rentalId: string) => {
     throw new AppError(httpStatus.BAD_REQUEST, 'Faild To Make Bike Return')
   }
 }
+
+// !Get all Rental (my rental)
+
+const getMyRentalFromDB = async (userData: JwtPayload) => {
+  const result = await Rental.find({ userId: userData?.userId })
+  return result
+}
 export const rentalServices = {
   createBikeRentalIntoDB,
   returnBikeRentalFormDB,
+  getMyRentalFromDB,
 }
