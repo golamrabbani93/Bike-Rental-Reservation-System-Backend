@@ -5,10 +5,13 @@ import AppError from '../errors/AppError'
 import httpStatus from 'http-status'
 import jwt, { JwtPayload } from 'jsonwebtoken'
 import config from '../config'
+import { TUserRole } from '../modules/User/user.interface'
+import sendResponse from '../utils/sendResponse'
+import { User } from '../modules/User/user.model'
 
-const auth = () => {
+const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    // *get Token From Headers And Split
+    // *get Token From client Side  And Split
     const token = req.headers.authorization?.split(' ')?.[1]
 
     if (!token) {
@@ -19,6 +22,23 @@ const auth = () => {
       token,
       config.jwt_access_secret as string,
     ) as JwtPayload
+
+    const { role, userEmail } = decoded
+
+    // * Check User is Exists in Database
+    const existsUser = await User.isUserExistsByEmail(userEmail)
+    if (!existsUser) {
+      throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !')
+    }
+
+    // !Check User Role
+    if (requiredRoles && !requiredRoles.includes(role)) {
+      sendResponse(res, {
+        success: false,
+        statusCode: 401,
+        message: 'You have no access to this route',
+      })
+    }
     req.user = decoded as JwtPayload
     next()
   })
