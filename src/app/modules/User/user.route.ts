@@ -7,6 +7,10 @@ const router = express.Router()
 
 //* Get A single user Route
 
-router.get('/me', auth(USER_ROLE.admin), userControllers.getSingleUser)
+router.get(
+  '/me',
+  auth(USER_ROLE.user, USER_ROLE.admin),
+  userControllers.getSingleUser,
+)
 
 export const userRoutes = router
