@@ -11,7 +11,17 @@ const getAllBikeDataFormDB = async () => {
   const result = await Bike.find()
   return result
 }
+
+// *Update Bike Data By bike Id
+
+const updateBikeIntoDB = async (id: string, payload: Partial<TBike>) => {
+  const result = await Bike.findByIdAndUpdate(id, payload, {
+    new: true,
+  })
+  return result
+}
 export const bikeServices = {
   createBikeDataIntoDB,
   getAllBikeDataFormDB,
+  updateBikeIntoDB,
 }

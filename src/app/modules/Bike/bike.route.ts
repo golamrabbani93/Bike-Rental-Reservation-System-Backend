@@ -20,4 +20,12 @@ router.post(
 
 router.get('/', bikeController.getAllBikeData)
 
+// ! Update Bike Data Route
+router.put(
+  '/:id',
+  auth(USER_ROLE.admin),
+  validateRequest(BikeValidation.updateBikeValidationSchema),
+  bikeController.updateBikeData,
+)
+
 export const bikeRoutes = router
