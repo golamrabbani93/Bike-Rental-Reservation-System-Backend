@@ -39,6 +39,18 @@ const UserSchema = new Schema<TUser, UserModel>(
   },
   {
     timestamps: true,
+    toJSON: {
+      transform: function (doc, ret) {
+        delete ret.password
+        return ret
+      },
+    },
+    toObject: {
+      transform: function (doc, ret) {
+        delete ret.password
+        return ret
+      },
+    },
   },
 )
 
@@ -54,6 +66,7 @@ UserSchema.pre('save', async function (next) {
 
   next()
 })
+
 UserSchema.statics.isUserExistsByEmail = async function (email: string) {
   return await User.findOne({ email }).select('+password')
 }

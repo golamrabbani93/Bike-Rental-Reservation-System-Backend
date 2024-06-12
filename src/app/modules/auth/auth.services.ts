@@ -3,6 +3,8 @@ import AppError from '../../errors/AppError'
 import { TUser } from '../User/user.interface'
 import { User } from '../User/user.model'
 import { TLoginUser } from './auth.interface'
+import jwt from 'jsonwebtoken'
+import config from '../../config'
 // *Register User Info In to Database
 const registerUserIntoDB = async (payload: TUser) => {
   const result = await User.create(payload)
@@ -23,6 +25,19 @@ const loginUser = async (payload: TLoginUser) => {
     !(await User.isPasswordMatched(payload?.password, existsUser?.password))
   ) {
     throw new AppError(httpStatus.FORBIDDEN, 'Password do not matched')
+  }
+  //* Create JWT token and sent to the  client
+
+  const jwtPayload = {
+    userEmail: existsUser.email,
+    role: existsUser.role,
+  }
+  const accessToken = jwt.sign(jwtPayload, config.jwt_access_secret as string, {
+    expiresIn: '30d',
+  })
+  return {
+    accessToken,
+    existsUser,
   }
 }
 export const authServices = {
