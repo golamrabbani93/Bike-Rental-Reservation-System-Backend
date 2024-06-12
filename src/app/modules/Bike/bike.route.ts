@@ -16,4 +16,8 @@ router.post(
   bikeController.createBikeData,
 )
 
+// !get all Bike Data
+
+router.get('/', bikeController.getAllBikeData)
+
 export const bikeRoutes = router

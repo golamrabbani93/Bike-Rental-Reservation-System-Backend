@@ -16,6 +16,27 @@ const createBikeData = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+// *Get All bike data
+const getAllBikeData = catchAsync(async (req: Request, res: Response) => {
+  const result = await bikeServices.getAllBikeDataFormDB()
+  if (result.length > 0) {
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Bikes retrieved successfully',
+      data: result,
+    })
+  } else {
+    sendResponse(res, {
+      statusCode: httpStatus.NOT_FOUND,
+      success: false,
+      message: 'No Data Found',
+      data: [],
+    })
+  }
+})
+
 export const bikeController = {
   createBikeData,
+  getAllBikeData,
 }
