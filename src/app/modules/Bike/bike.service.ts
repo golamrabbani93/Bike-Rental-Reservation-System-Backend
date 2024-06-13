@@ -1,3 +1,5 @@
+import httpStatus from 'http-status'
+import AppError from '../../errors/AppError'
 import { TBike } from './bike.interface'
 import { Bike } from './bike.model'
 
@@ -15,6 +17,14 @@ const getAllBikeDataFormDB = async () => {
 // *Update Bike Data By bike Id
 
 const updateBikeIntoDB = async (id: string, payload: Partial<TBike>) => {
+  const existsBike = await Bike.findById(id)
+  if (!existsBike) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'This Bike is not Exists in Database',
+    )
+  }
+
   const result = await Bike.findByIdAndUpdate(id, payload, {
     new: true,
   })
@@ -24,6 +34,13 @@ const updateBikeIntoDB = async (id: string, payload: Partial<TBike>) => {
 // * Delete Bike Data By Bike Id
 
 const deleteBikeDataFromDB = async (id: string) => {
+  const existsBike = await Bike.findById(id)
+  if (!existsBike) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'This Bike is not Exists in Database',
+    )
+  }
   const result = await Bike.findByIdAndDelete(id, { new: true })
   return result
 }
