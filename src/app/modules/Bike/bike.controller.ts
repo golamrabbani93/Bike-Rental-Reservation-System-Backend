@@ -41,12 +41,21 @@ const updateBikeData = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params
   const bikeData = req.body
   const result = await bikeServices.updateBikeIntoDB(id, bikeData)
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'Bike updated successfully',
-    data: result,
-  })
+  if (!result) {
+    sendResponse(res, {
+      statusCode: httpStatus.NOT_FOUND,
+      success: false,
+      message: 'No Data Found',
+      data: [],
+    })
+  } else {
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'Bike updated successfully',
+      data: result,
+    })
+  }
 })
 
 // *UpdDeleteate bike data

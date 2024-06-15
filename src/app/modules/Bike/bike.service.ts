@@ -17,13 +17,13 @@ const getAllBikeDataFormDB = async () => {
 // *Update Bike Data By bike Id
 
 const updateBikeIntoDB = async (id: string, payload: Partial<TBike>) => {
-  const existsBike = await Bike.findById(id)
-  if (!existsBike) {
-    throw new AppError(
-      httpStatus.NOT_FOUND,
-      'This Bike is not Exists in Database',
-    )
-  }
+  // const existsBike = await Bike.findById(id)
+  // // if (!existsBike) {
+  // //   throw new AppError(
+  // //     httpStatus.NOT_FOUND,
+  // //     'This Bike is not Exists in Database',
+  // //   )
+  // // }
 
   const result = await Bike.findByIdAndUpdate(id, payload, {
     new: true,
