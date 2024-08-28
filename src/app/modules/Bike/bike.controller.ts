@@ -18,7 +18,8 @@ const createBikeData = catchAsync(async (req: Request, res: Response) => {
 
 // *Get All bike data
 const getAllBikeData = catchAsync(async (req: Request, res: Response) => {
-  const result = await bikeServices.getAllBikeDataFormDB()
+  const query = req.query
+  const result = await bikeServices.getAllBikeDataFormDB(query)
   if (result.length > 0) {
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -32,6 +33,28 @@ const getAllBikeData = catchAsync(async (req: Request, res: Response) => {
       success: false,
       message: 'No Data Found',
       data: [],
+    })
+  }
+})
+
+// *get a  bike data
+const getABikeData = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params
+
+  const result = await bikeServices.getABikeDataFromDB(id)
+  if (!result) {
+    sendResponse(res, {
+      statusCode: httpStatus.NOT_FOUND,
+      success: false,
+      message: 'No Data Found',
+      data: [],
+    })
+  } else {
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'Bike retrieved successfully',
+      data: result,
     })
   }
 })
@@ -80,6 +103,7 @@ const deleteBikeData = catchAsync(async (req: Request, res: Response) => {
 export const bikeController = {
   createBikeData,
   getAllBikeData,
+  getABikeData,
   updateBikeData,
   deleteBikeData,
 }

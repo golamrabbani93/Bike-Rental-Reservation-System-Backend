@@ -8,6 +8,10 @@ const BikeSchema = new Schema<TBike>({
     type: String,
     required: [true, 'Bike Name is required'],
   },
+  image: {
+    type: String,
+    required: [true, 'Bike Name is required'],
+  },
   description: {
     type: String,
     required: [true, 'Description is required'],

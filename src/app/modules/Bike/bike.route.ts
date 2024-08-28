@@ -20,6 +20,10 @@ router.post(
 
 router.get('/', bikeController.getAllBikeData)
 
+// !Get A all Bike Data
+
+router.get('/:id', bikeController.getABikeData)
+
 // ! Update Bike Data Route
 router.put(
   '/:id',

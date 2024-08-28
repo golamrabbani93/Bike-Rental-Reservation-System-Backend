@@ -1,6 +1,7 @@
 export interface TBike {
   name: string
   description: string
+  image: string
   pricePerHour: number
   isAvailable?: boolean
   cc: number

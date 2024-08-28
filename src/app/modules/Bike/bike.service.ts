@@ -2,6 +2,8 @@ import httpStatus from 'http-status'
 import AppError from '../../errors/AppError'
 import { TBike } from './bike.interface'
 import { Bike } from './bike.model'
+import QueryBuilder from '../../builder/queryBuilder'
+import { bikeSearchableFields } from './bike.constant'
 
 // *Create Bike Data In to Database
 const createBikeDataIntoDB = async (payload: TBike) => {
@@ -9,22 +11,28 @@ const createBikeDataIntoDB = async (payload: TBike) => {
   return result
 }
 // * Get all Bike Data From Database
-const getAllBikeDataFormDB = async () => {
-  const result = await Bike.find()
+const getAllBikeDataFormDB = async (query: Record<string, unknown>) => {
+  const bikeQuery = new QueryBuilder(Bike.find(), query)
+    .search(bikeSearchableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields()
+  const result = await bikeQuery.modelQuery
+  // const meta = await bikeQuery.countTotal()
+  return result
+}
+
+// *Get a Bike Data By bike Id
+
+const getABikeDataFromDB = async (id: string) => {
+  const result = await Bike.findById(id)
   return result
 }
 
 // *Update Bike Data By bike Id
 
 const updateBikeIntoDB = async (id: string, payload: Partial<TBike>) => {
-  // const existsBike = await Bike.findById(id)
-  // // if (!existsBike) {
-  // //   throw new AppError(
-  // //     httpStatus.NOT_FOUND,
-  // //     'This Bike is not Exists in Database',
-  // //   )
-  // // }
-
   const result = await Bike.findByIdAndUpdate(id, payload, {
     new: true,
   })
@@ -46,6 +54,7 @@ const deleteBikeDataFromDB = async (id: string) => {
 }
 export const bikeServices = {
   createBikeDataIntoDB,
+  getABikeDataFromDB,
   getAllBikeDataFormDB,
   updateBikeIntoDB,
   deleteBikeDataFromDB,

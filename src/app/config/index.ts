@@ -9,4 +9,5 @@ export default {
   bcrypt_salt_rounds: process.env.SALT_ROUNDS,
   NODE_ENV: process.env.NODE_ENV,
   jwt_access_secret: process.env.JWT_ACCESS_SECRET,
+  payment_intent: process.env.PAYMENT_INTENT,
 }

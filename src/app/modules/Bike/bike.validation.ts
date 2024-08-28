@@ -45,6 +45,13 @@ export const updateBikeValidationSchema = z.object({
       })
       .min(1)
       .optional(),
+    image: z
+      .string({
+        invalid_type_error: 'Image URL must be string',
+        required_error: 'Image URL is required',
+      })
+      .min(1)
+      .optional(),
     description: z
       .string({
         invalid_type_error: 'description must be string',

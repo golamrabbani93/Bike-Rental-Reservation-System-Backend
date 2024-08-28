@@ -8,9 +8,33 @@ const app: Application = express()
 // ! Parser
 app.use(express.json())
 app.use(cors())
+app.use(cors({ origin: ['http://localhost:5173'] }))
+
+import Stripe from 'stripe'
+import config from './app/config'
+
+//* Initialize Stripe with your secret key
+const stripe = new Stripe(config.payment_intent as string)
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Bike Rental Reservation System Backend Is Ruuning')
+})
+
+// *Payment intent
+
+app.post('/api/create-payment-intent', async (req: Request, res: Response) => {
+  const { price } = req.body
+  const amount = price * 100
+  // Create a PaymentIntent with the order amount and currency
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: amount,
+    currency: 'usd',
+    payment_method_types: ['card'],
+  })
+
+  res.send({
+    clientSecret: paymentIntent.client_secret,
+  })
 })
 
 //* application routes
