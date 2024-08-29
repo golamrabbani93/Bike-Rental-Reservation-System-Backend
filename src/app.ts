@@ -8,7 +8,7 @@ const app: Application = express()
 // ! Parser
 app.use(express.json())
 app.use(cors())
-app.use(cors({ origin: ['http://localhost:5173'] }))
+app.use(cors({ origin: ['https://bikeist.vercel.app/'] }))
 
 import Stripe from 'stripe'
 import config from './app/config'

@@ -1,7 +1,1 @@
-export const bikeSearchableFields = [
-  'name',
-  'year',
-  'model',
-  'brand',
-  'isAvailable',
-]
+export const bikeSearchableFields = ['name', 'description', 'model', 'brand']
