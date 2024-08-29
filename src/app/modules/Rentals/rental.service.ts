@@ -6,6 +6,7 @@ import { Rental } from './rental.model'
 import mongoose from 'mongoose'
 import { Bike } from '../Bike/bike.model'
 import { getTotalCost } from './rental.utils'
+import QueryBuilder from '../../builder/queryBuilder'
 
 // ! create Bike
 const createBikeRentalIntoDB = async (
@@ -108,12 +109,33 @@ const returnBikeRentalFormDB = async (rentalId: string) => {
 
 // !Get all Rental (my rental)
 
-const getMyRentalFromDB = async (userData: JwtPayload) => {
-  const result = await Rental.find({ userId: userData?.userId })
+const getMyRentalFromDB = async (
+  userData: JwtPayload,
+  query: Record<string, unknown>,
+) => {
+  const rentalQuery = new QueryBuilder(Rental.find(), query)
+    .search(['paymentStatus', 'userId'])
+    .filter()
+    .sort()
+    .paginate()
+    .populate('bikeId')
+    .populate('userId')
+    .fields()
+  const result = await rentalQuery.modelQuery
+  return result
+}
+
+// *Update Bike Data By bike Id
+
+const updateRentalIntoDB = async (id: string, payload: Partial<TRental>) => {
+  const result = await Rental.findByIdAndUpdate(id, payload, {
+    new: true,
+  })
   return result
 }
 export const rentalServices = {
   createBikeRentalIntoDB,
   returnBikeRentalFormDB,
   getMyRentalFromDB,
+  updateRentalIntoDB,
 }

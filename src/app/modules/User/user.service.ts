@@ -10,6 +10,11 @@ const getSingleUserFromDB = async (payload: JwtPayload) => {
   })
   return result
 }
+// *Get ALl User Profile From Database
+const getAllUserFromDB = async () => {
+  const result = await User.find()
+  return result
+}
 
 // *Update a User Profile
 
@@ -30,8 +35,22 @@ const updateSingleUserIntoDB = async (
   )
   return result
 }
+const makeAdminUserIntoDB = async (id: string) => {
+  const result = await User.findByIdAndUpdate(
+    id,
+    {
+      role: 'admin',
+    },
+    {
+      new: true,
+    },
+  )
+  return result
+}
 
 export const userServices = {
   getSingleUserFromDB,
   updateSingleUserIntoDB,
+  getAllUserFromDB,
+  makeAdminUserIntoDB,
 }

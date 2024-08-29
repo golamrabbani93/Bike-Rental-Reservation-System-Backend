@@ -6,5 +6,9 @@ export interface TRental {
   startTime: Date
   returnTime?: Date | null
   totalCost?: number
+  paymentStatus?: string
+  advance: number
+  discount: number
+  payment: number
   isReturned?: boolean
 }

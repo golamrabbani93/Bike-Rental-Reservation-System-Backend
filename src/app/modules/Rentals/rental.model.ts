@@ -23,6 +23,22 @@ const RentalSchema = new Schema<TRental>({
     type: Number,
     default: 0,
   },
+  paymentStatus: {
+    type: String,
+    default: 'unpaid',
+  },
+  advance: {
+    type: Number,
+    default: 0,
+  },
+  discount: {
+    type: Number,
+    default: 0,
+  },
+  payment: {
+    type: Number,
+    default: 0,
+  },
   isReturned: {
     type: Boolean,
     default: false,

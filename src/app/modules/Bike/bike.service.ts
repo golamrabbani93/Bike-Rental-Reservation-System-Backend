@@ -19,8 +19,9 @@ const getAllBikeDataFormDB = async (query: Record<string, unknown>) => {
     .paginate()
     .fields()
   const result = await bikeQuery.modelQuery
-  // const meta = await bikeQuery.countTotal()
-  return result
+  const meta = await bikeQuery.countTotal()
+
+  return { data: result, meta: meta }
 }
 
 // *Get a Bike Data By bike Id

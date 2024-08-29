@@ -63,6 +63,10 @@ class QueryBuilder<T> {
     this.modelQuery = this.modelQuery.select(fields)
     return this
   }
+  populate(populateFields: string | string[]) {
+    this.modelQuery = this.modelQuery.populate(populateFields)
+    return this
+  }
   async countTotal() {
     const totalQueries = this.modelQuery.getFilter()
     const total = await this.modelQuery.model.countDocuments(totalQueries)

@@ -20,7 +20,7 @@ const createBikeData = catchAsync(async (req: Request, res: Response) => {
 const getAllBikeData = catchAsync(async (req: Request, res: Response) => {
   const query = req.query
   const result = await bikeServices.getAllBikeDataFormDB(query)
-  if (result.length > 0) {
+  if (result?.data?.length > 0) {
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
