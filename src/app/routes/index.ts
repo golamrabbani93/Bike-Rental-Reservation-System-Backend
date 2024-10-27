@@ -4,6 +4,8 @@ import { userRoutes } from '../modules/User/user.route'
 import { bikeRoutes } from '../modules/Bike/bike.route'
 import { rentalRoutes } from '../modules/Rentals/rental.route'
 import { couponRoutes } from '../modules/coupon/coupon.route'
+import { brandRoutes } from '../modules/brand/brand.route'
+import { deviceRoutes } from '../modules/device/device.route'
 
 const router = Router()
 
@@ -17,6 +19,10 @@ const moduleRoutes = [
     route: userRoutes,
   },
   {
+    path: '/brands',
+    route: brandRoutes,
+  },
+  {
     path: '/bikes',
     route: bikeRoutes,
   },
@@ -27,6 +33,10 @@ const moduleRoutes = [
   {
     path: '/coupons',
     route: couponRoutes,
+  },
+  {
+    path: '/devices',
+    route: deviceRoutes,
   },
 ]
 
